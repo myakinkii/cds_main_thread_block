@@ -1,0 +1,55 @@
+
+
+### rest call test if added to server.js
+GET http://localhost:4004/gpt-rest/call
+
+
+@baseURL = http://localhost:4004/gpt-odata
+
+### Call odata ubnound action  => must NOT block main thread unless MAKE_IT_BLOCK set
+POST {{baseURL}}/call
+Content-Type: application/json
+
+{}
+
+
+### create dummy
+# @name createDummy
+POST {{baseURL}}/dummy
+Content-Type: application/json
+
+{
+    "text": "test"
+}
+
+### save created id
+@id = {{createDummy.response.body.$.id}}
+
+
+### Call odata bound action on DRAFT => will ALWAYS block main thread
+POST {{baseURL}}/dummy(id={{id}},IsActiveEntity=false)/gpt.ChatGptService.call
+Content-Type: application/json
+
+{}
+
+### prepare draft
+POST {{baseURL}}/dummy(id={{id}},IsActiveEntity=false)/gpt.ChatGptService.draftPrepare
+Content-Type: application/json
+
+{
+    "SideEffectsQualifier": ""
+}
+
+### activate draft
+POST {{baseURL}}/dummy(id={{id}},IsActiveEntity=false)/gpt.ChatGptService.draftActivate
+Content-Type: application/json
+
+{}
+
+
+### Call odata bound action on ACTIVE => must NOT block main thread unless MAKE_IT_BLOCK is set
+POST {{baseURL}}/dummy(id={{id}},IsActiveEntity=true)/gpt.ChatGptService.call
+Content-Type: application/json
+
+{}
+

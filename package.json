@@ -1,0 +1,12 @@
+{
+  "name": "cds_main_thread_block",
+  "version": "1.0.0",
+  "description": "SAP CAP main thread blocking test",
+  "repository": "https://github.com/myakinkii/cds_main_thread_block.git",
+  "license": "MIT",
+  "scripts": {
+    "sample": "cd test && cds init sample && cd sample && cds add sample",
+    "test": "echo 'OPENAI_API_KEY=' > test/sample/.env && cp gpt-* test/sample/srv/ && cd test/sample && npm i openai && npm start",
+    "start": "cd test/sample && npx cds-serve"
+  }
+}
