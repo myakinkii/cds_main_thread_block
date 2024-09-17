@@ -1,7 +1,10 @@
-## sap cap main thread blocking test repo
+## sap cap main tx blocking test repo
 We use chat gpt call that takes around 10 seconds to see if it cds blocks main thread
 
-**TL;DR** Whenever we join automatic transaction, we block main thread until COMMIT is done
+**TL;DR** Whenever we join automatic transaction, we ~~block main thread~~ can be blocked at acquire until COMMIT is done
+
+_Forgot tha fact that sqlite is single user, so the whole db is busy performing a transaction.
+In case of other dbs this might potentially also have impact depending on number of simultaneous users._
 
 We can revert to [manual transations](https://cap.cloud.sap/docs/node.js/cds-tx#manual-transactions) (unless we have draft-bound action) to make it COMMIT before doing slow request
 
