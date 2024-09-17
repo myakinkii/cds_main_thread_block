@@ -1,4 +1,4 @@
-## sap cap main tx blocking test repo
+## sap cap tx blocking test repo
 We use chat gpt call that takes around 10 seconds to see if it cds blocks main thread
 
 **TL;DR** Whenever we join automatic transaction, we ~~block main thread~~ can be blocked at acquire until COMMIT is done
